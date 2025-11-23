@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://pwxokw4c2idl"]
+
+[ext_resource type="Texture2D" uid="uid://cmmnwrmswqfid" path="res://paper-plane.png" id="1_nnjcc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_arykg"]
+height = 20.0
+
+[node name="PaperPlane" type="RigidBody2D"]
+position = Vector2(-20, 13)
+gravity_scale = 0.8
+sleeping = true
+linear_damp = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(21.000002, -13)
+scale = Vector2(0.04468783, 0.043945313)
+texture = ExtResource("1_nnjcc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(21, -14)
+shape = SubResource("CapsuleShape2D_arykg")

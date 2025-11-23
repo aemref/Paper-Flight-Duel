@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7k5glgffomht"]
+
+[ext_resource type="Texture2D" uid="uid://bmuiuhpl4oci6" path="res://Adobe Express - file-2.png" id="1_ofjsc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_arykg"]
+radius = 9.0
+height = 22.0
+
+[node name="PaperPlane" type="RigidBody2D"]
+gravity_scale = 0.8
+sleeping = true
+linear_damp = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.3020023, 1.4519391)
+scale = Vector2(0.025471423, 0.019902352)
+texture = ExtResource("1_ofjsc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("CapsuleShape2D_arykg")

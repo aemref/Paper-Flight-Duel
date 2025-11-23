@@ -1,0 +1,128 @@
+[gd_scene load_steps=9 format=3 uid="uid://qnrd4r4ctqvq"]
+
+[ext_resource type="Script" uid="uid://dr4j4cj1yuig3" path="res://Game.gd" id="1_wbfu4"]
+[ext_resource type="PackedScene" uid="uid://c7k5glgffomht" path="res://Paper_plane.tscn" id="2_u44n3"]
+[ext_resource type="PackedScene" uid="uid://pwxokw4c2idl" path="res://PaperPlane_Yellow.tscn" id="3_sb48q"]
+[ext_resource type="Script" uid="uid://c7sbbjra5l01t" path="res://UI.gd" id="3_u44n3"]
+[ext_resource type="Texture2D" uid="uid://3v6nv7qfkq2p" path="res://red_arrow.png" id="5_t88pq"]
+[ext_resource type="Texture2D" uid="uid://di1mmovvffaog" path="res://player_black.png" id="6_3mrqo"]
+[ext_resource type="Texture2D" uid="uid://crrk2vphkcuj6" path="res://player_yellow.png" id="7_joorw"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3mrqo"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_wbfu4")
+plane_black_scene = ExtResource("2_u44n3")
+plane_yellow_scene = ExtResource("3_sb48q")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(573, 321)
+limit_bottom = 640
+position_smoothing_enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("3_u44n3")
+
+[node name="PowerBar" type="ProgressBar" parent="UI"]
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 480.0
+offset_bottom = 80.0
+min_value = 200.0
+max_value = 1500.0
+value = 200.0
+show_percentage = false
+
+[node name="StatusLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 1140.0
+offset_bottom = 40.0
+
+[node name="ResultsPanel" type="PanelContainer" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -73.5
+offset_right = 57.0
+offset_bottom = 73.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ResultsPanel"]
+layout_mode = 2
+
+[node name="ResultsText" type="Label" parent="UI/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="P1ScoreText" type="Label" parent="UI/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="P2ScoreText" type="Label" parent="UI/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="RetryButton" type="Button" parent="UI/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Play again"
+
+[node name="MenuButton" type="Button" parent="UI/ResultsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Back to Menu"
+
+[node name="Arrow" type="Sprite2D" parent="."]
+position = Vector2(100, 350)
+scale = Vector2(0.19252874, 0.2319392)
+texture = ExtResource("5_t88pq")
+
+[node name="PlayerBlack" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(45, 390)
+scale = Vector2(0.12880436, 0.12343752)
+texture = ExtResource("6_3mrqo")
+
+[node name="PlayerYellow" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(45.250004, 392.00003)
+scale = Vector2(0.048233695, 0.053125016)
+texture = ExtResource("7_joorw")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(0, 533)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(575, -95)
+shape = SubResource("WorldBoundaryShape2D_3mrqo")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -98.0
+offset_right = 49998.0
+offset_bottom = 107.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.00022955962, 0.5378692, 0.15226135, 1)
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="BackgroundLayer"]
+offset_left = 4.0
+offset_top = -3.0
+offset_right = 1153.0
+offset_bottom = 640.0
+color = Color(0.19215687, 0.45490196, 1, 1)
+
+[connection signal="show_results" from="." to="UI" method="_on_game_show_results"]
+[connection signal="update_angle" from="." to="UI" method="_on_game_update_angle"]
+[connection signal="update_power_bar" from="." to="UI" method="_on_game_update_power_bar"]
+[connection signal="update_ui_text" from="." to="UI" method="_on_game_update_ui_text"]
+[connection signal="back_to_menu" from="UI" to="." method="_on_ui_back_to_menu"]
+[connection signal="retry_game" from="UI" to="." method="_on_ui_retry_game"]
